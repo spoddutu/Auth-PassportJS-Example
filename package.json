@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/spoddutu/Passport/issues"
   },
-  "homepage": "https://github.com/spoddutu/Passport#readme"
+  "homepage": "https://github.com/spoddutu/Passport#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
 }

@@ -1,8 +1,8 @@
-var server = require('express')();
+var express = require('express');
+var server = express();
 
-server.get('/', function(req, res){
-	res.send("Default GET request");
-});
+// serving static files from public folder
+server.use(express.static("../public"));
 
 server.listen(process.env.PORT || 3001);
 console.log("Server is up and running...");

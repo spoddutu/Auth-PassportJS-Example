@@ -16,5 +16,22 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "bootstrap": "~3.3.5",
+    "angular-ui-router": "~0.2.15"
+  },
+  "install": {
+    "path": "public/vendor",
+    "sources": {
+      "jquery": "vendor/jquery/dist/jquery.min.js",
+      "bootstrap": [
+        "vendor/bootstrap/dist/js/bootstrap.min.js",
+        "vendor/bootstrap/dist/css/bootstrap.min.css"
+      ],
+      "angular": "vendor/angular/angular.min.js",
+      "angular-ui-router": "vendor/angular-ui-router/release/angular-ui-router.min.js"
+    }
+  }
 }
