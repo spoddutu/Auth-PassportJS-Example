@@ -1,0 +1,20 @@
+{
+  "name": "Angular-Passport",
+  "description": "Authentiation using Passport JS",
+  "main": "index.html",
+  "keywords": [
+    "Passport"
+  ],
+  "authors": [
+    "Santhosh P"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
