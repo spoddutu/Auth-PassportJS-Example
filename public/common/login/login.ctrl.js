@@ -8,7 +8,6 @@ angular.module("common.login.module",[])
 				$rootScope.user = undefined;
 			}
 			else{
-				console.log(response);
 				$rootScope.message = undefined;
 				$rootScope.user = response.user;
 				$state.go("home");

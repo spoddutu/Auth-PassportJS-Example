@@ -20,8 +20,8 @@ angular.module("common.register.module", [])
 				$rootScope.message = undefined;
 				$rootScope.errorCode = undefined;
 				$rootScope.user = response.user;
+				$state.go("home");
 			}
-			// $state.go("home");
 		});
 	};
 

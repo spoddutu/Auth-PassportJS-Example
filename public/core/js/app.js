@@ -1,6 +1,7 @@
 var app = angular.module('passport-app', ['ui.router','common.login.module', 'common.register.module']);
 
-app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
+app.config(['$urlRouterProvider', '$stateProvider',
+function($urlRouterProvider, $stateProvider){
 	$urlRouterProvider.otherwise("/home");
 
 	$stateProvider
@@ -27,7 +28,10 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
 	})
 	.state("profile",{
 		url : "/profile",
-		template: "<h3> Profile Page </h3>"
+		template: "<h3> Profile Page </h3>",
+		resolve : {
+			logincheck : isLoggedIn
+		}
 	})
 	.state("about", {
 		url : "/about",
@@ -38,6 +42,23 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
 		template : "<h3> Contact Page </h3>"
 	})
 }]);
+
+this.isLoggedIn = function($q, $http, $rootScope, $state){
+	$http.get("/isLoggedIn").success(function(response){
+		console.log(response);
+		var defer = $q.defer();
+		if(response.code != 0){
+			$rootScope.user = response.user;
+			defer.resolve(response);
+		}
+		else{
+			defer.reject(response);
+			$rootScope.user = undefined;
+			$state.go("home");
+		}
+		return defer.promise;
+	});
+};
 
 app.controller("logoutCtrl", ["$http", "$rootScope", "$state", function($http, $rootScope, $state){	
 	$http.put("/logout")

@@ -55,12 +55,19 @@ server.post("/login", passport.authenticate("local", {
 	failureRedirect: "/authFailure",
 	failureFlash : true
 }), function(req, res){
-	console.log(req.user);
 	res.json({user: req.user});
 });
 
+server.get("/isLoggedIn", function(req, res){
+	res.send(req.isAuthenticated()? {code: 1, user: req.user} : {code: 0});
+});
+
+server.put("/logout", function(req, res){
+	req.logout();
+	res.send(200);
+});
+
 server.post("/register", function(req, res){
-	console.log(req.body);
 	var newUser = new UserModel({_id: req.body.email, password: req.body.password});
 
 	newUser.save(function(err, user){
@@ -69,7 +76,13 @@ server.post("/register", function(req, res){
 			res.json({errorCode: 102, message: "Email already exists, Choose another !"});
 			return;
 		}
-		res.json(user);
+		req.login(user, function(err){
+			if(err){
+				return res.json(null)
+			}
+			res.json({user: req.user});
+		});
+		
 	});
 });
 
