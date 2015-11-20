@@ -1,12 +1,18 @@
 # Passport
 Authentication using passportJS
 
-Follow below steps to create an Angular app and Authentication using passport JS
+Follow below steps to run passport JS app
 
 1) Create a Repo in GITHub and clone to dektop using below command
 	git clone "url"
-2) install bower using "npm install -g bower" and use "bower init" to create bower.json for package managment.
+2) install bower using "npm install -g bower" for package managment.
 
-3) using "bower install bootstrap angular --save" install dependency libraries and ave it to bower.json
+3) use "npm install -g bower-installer", Tool for installing bower dependencies that won't include entire repos.
 
-4) use "npm install -g bower-installer", Tool for installing bower dependencies that won't include entire repos.
+5) use "npm install" to install all server dependencies
+
+6) use "bower install" to install all ui dependencies
+
+7) use "bower-installer" to move required files as specified in bower.json "install" path.
+
+8) Launch http://localhost:3001/ and njoy...!
