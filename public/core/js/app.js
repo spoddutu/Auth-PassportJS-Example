@@ -7,8 +7,10 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
 	.state("home",{
 		url : "/home",
 		templateUrl : "core/templates/main.html",
-		controller : function($state){
-			$state.go("home.login");
+		controller : function($state, $rootScope){
+			if(!$rootScope.user){
+				$state.go("home.login");
+			}
 		}
 	})
 	.state("home.login", {
@@ -19,6 +21,14 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
 		url : "/register",
 		templateUrl : "common/register/register.html"
 	})
+	.state("logout",{
+		url : "/logout",
+		controller: "logoutCtrl"
+	})
+	.state("profile",{
+		url : "/profile",
+		template: "<h3> Profile Page </h3>"
+	})
 	.state("about", {
 		url : "/about",
 		template : "<h3> About Page </h3>"
@@ -27,4 +37,12 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
 		url : "/contact",
 		template : "<h3> Contact Page </h3>"
 	})
+}]);
+
+app.controller("logoutCtrl", ["$http", "$rootScope", "$state", function($http, $rootScope, $state){	
+	$http.put("/logout")
+		.success(function(response){
+			$rootScope.user = undefined;
+			$state.go("home");
+		});
 }]);

@@ -1,5 +1,5 @@
 {
-  "name": "passport",
+  "name": "angular-passport",
   "version": "0.1.0",
   "description": "Express server to authenticate using passport",
   "main": "server/Server.js",
@@ -21,7 +21,11 @@
   "homepage": "https://github.com/spoddutu/Passport#readme",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "connect-flash": "^0.1.1",
     "express": "^4.13.3",
-    "mongoose": "^4.2.6"
+    "express-session": "^1.12.1",
+    "mongoose": "^4.2.6",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   }
 }

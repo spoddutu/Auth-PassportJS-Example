@@ -1,6 +1,10 @@
 var express = require('express');
+var session = require('express-session');
 var bodyParser = require('body-parser'); // body-parser to parse request body
 var mongoose = require('mongoose');
+var flash = require('connect-flash');
+var passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy;
 
 mongoose.connect("mongodb://localhost/test");
 
@@ -11,15 +15,48 @@ var server = express();
 server.use(express.static("../public"));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+server.use(session({secret : "passportjs"}));
 
-server.post("/login", function(req, res){
-	UserModel.find({_id: req.body.email, password: req.body.password}, function(err, user){
+server.use(passport.initialize());
+server.use(passport.session());
+server.use(flash());
+
+// Local Strategy
+passport.use(new LocalStrategy({
+	usernameField: "email",
+	passReqToCallback :true
+}, function(req, username, password, done){
+	UserModel.findOne({_id: username, password: password}, function(err, user){
 		if(err){
-			res.json({errorCode: 101, message: "Invalid credentials !"});
-			return;
+			return done(err);
 		}
-		res.json(user);
+		if(!user){
+			return done(null, false, req.flash("message", "Invalid credentials !"));
+		}
+		return done(null, user);
 	});
+}));
+
+passport.serializeUser(function(user, done){
+	done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done){
+	UserModel.findById(id, function(err, user){
+		done(null, user)
+	})
+});
+
+server.get("/authFailure", function(req, res){
+	res.json({errorCode: 101, message: req.flash("message")[0]});
+})
+
+server.post("/login", passport.authenticate("local", {
+	failureRedirect: "/authFailure",
+	failureFlash : true
+}), function(req, res){
+	console.log(req.user);
+	res.json({user: req.user});
 });
 
 server.post("/register", function(req, res){
