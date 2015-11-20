@@ -1,4 +1,4 @@
-var app = angular.module('passport-app', ['ui.router','common.login.module']);
+var app = angular.module('passport-app', ['ui.router','common.login.module', 'common.register.module']);
 
 app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
 	$urlRouterProvider.otherwise("/home");
@@ -14,6 +14,10 @@ app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider,
 	.state("home.login", {
 		url : "/login",
 		templateUrl : "common/login/login.html"
+	})
+	.state("home.register", {
+		url : "/register",
+		templateUrl : "common/register/register.html"
 	})
 	.state("about", {
 		url : "/about",
